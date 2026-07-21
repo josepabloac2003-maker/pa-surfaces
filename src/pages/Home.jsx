@@ -4,26 +4,17 @@ import HeroSplit from "../components/landing/HeroSplit";
 import WoodSection from "../components/landing/WoodSection";
 import TurfSection from "../components/landing/TurfSection";
 import Footer from "../components/landing/Footer";
-import WhatsAppFloat from "../components/landing/WhatsAppFloat";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-neutral-950 text-white overflow-x-hidden">
-      {}
+    <div className="bg-neutral-950 min-h-screen text-white font-sans antialiased selection:bg-amber-500 selection:text-neutral-950">
       <Navbar />
-      <div id="hero">
+      <main>
         <HeroSplit />
-      </div>
-      
-      {}
-      <WoodSection />
-      <TurfSection />
-      
-      {}
+        <WoodSection />
+        <TurfSection />
+      </main>
       <Footer />
-      <WhatsAppFloat />
     </div>
   );
 }
-```
-eof
