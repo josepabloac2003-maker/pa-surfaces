@@ -1,94 +1,102 @@
-import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useState } from "react";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const scrollTo = (id) => {
-    setMenuOpen(false);
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-neutral-950/95 backdrop-blur-md border-b border-white/5 py-3"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <button onClick={() => scrollTo("hero")} className="flex items-center gap-2">
-          <span className="font-bold text-xl tracking-tight text-white">
-            PA <span className="text-blue-500">Surfaces</span>
-          </span>
-        </button>
+    <nav className="fixed top-0 left-0 w-full z-50 bg-neutral-950/80 backdrop-blur-md border-b border-neutral-800">
+      <div className="max-w-7xl mx-mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <a href="#" className="text-2xl font-bold tracking-wider text-white">
+              PA <span className="text-amber-500">SURFACES</span>
+            </a>
+          </div>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
-          <button
-            onClick={() => scrollTo("madera")}
-            className="font-mono text-xs uppercase tracking-widest text-white/80 hover:text-blue-400 transition-colors"
-          >
-            Pisos de Madera
-          </button>
-          <button
-            onClick={() => scrollTo("pasto")}
-            className="font-mono text-xs uppercase tracking-widest text-white/80 hover:text-green-400 transition-colors"
-          >
-            Pasto Sintético
-          </button>
-          <button
-            onClick={() => scrollTo("contacto")}
-            className="font-mono text-xs uppercase tracking-widest px-5 py-2 rounded-full border border-white/20 text-white hover:bg-white hover:text-neutral-950 transition-all"
-          >
-            Contacto
-          </button>
-        </div>
+          {/* Desktop Menu */}
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-8">
+              <a
+                href="#wood"
+                className="text-gray-300 hover:text-amber-500 transition-colors duration-200 text-sm font-medium"
+              >
+                Pisos de Madera
+              </a>
+              <a
+                href="#turf"
+                className="text-gray-300 hover:text-emerald-500 transition-colors duration-200 text-sm font-medium"
+              >
+                Pasto Sintético
+              </a>
+              <a
+                href="#contact"
+                className="bg-amber-500 hover:bg-amber-600 text-neutral-950 font-semibold px-4 py-2 rounded-lg transition-colors duration-200 text-sm"
+              >
+                Cotizar
+              </a>
+            </div>
+          </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden text-white"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {menuOpen && (
-        <div className="md:hidden bg-neutral-950/95 backdrop-blur-md border-t border-white/5">
-          <div className="flex flex-col px-6 py-6 gap-4">
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
             <button
-              onClick={() => scrollTo("madera")}
-              className="font-mono text-xs uppercase tracking-widest text-white/70 text-left py-2 hover:text-blue-400"
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-neutral-800 focus:outline-none"
             >
-              Pisos de Madera
-            </button>
-            <button
-              onClick={() => scrollTo("pasto")}
-              className="font-mono text-xs uppercase tracking-widest text-white/70 text-left py-2 hover:text-green-400"
-            >
-              Pasto Sintético
-            </button>
-            <button
-              onClick={() => scrollTo("contacto")}
-              className="font-mono text-xs uppercase tracking-widest text-white border border-white/20 rounded-full px-5 py-2.5 text-center hover:bg-white hover:text-neutral-950 transition-all"
-            >
-              Contacto
+              <svg
+                className="h-6 w-6"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                {isOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isOpen && (
+        <div className="md:hidden bg-neutral-900 border-b border-neutral-800 px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <a
+            href="#wood"
+            onClick={() => setIsOpen(false)}
+            className="text-gray-300 hover:text-amber-500 block px-3 py-2 rounded-md text-base font-medium"
+          >
+            Pisos de Madera
+          </a>
+          <a
+            href="#turf"
+            onClick={() => setIsOpen(false)}
+            className="text-gray-300 hover:text-emerald-500 block px-3 py-2 rounded-md text-base font-medium"
+          >
+            Pasto Sintético
+          </a>
+          <a
+            href="#contact"
+            onClick={() => setIsOpen(false)}
+            className="bg-amber-500 text-neutral-950 block px-3 py-2 rounded-md text-base font-semibold text-center mt-2"
+          >
+            Cotizar
+          </a>
         </div>
       )}
     </nav>
   );
 }
-```
-eof
